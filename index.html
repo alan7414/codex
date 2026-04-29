@@ -1,43 +1,47 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Codex Pulse Demo</title>
+    <title>SLPCA | SHOPLINE Payments CA PrePRD Demo</title>
     <meta
       name="description"
-      content="A cinematic interactive frontend demo for GitHub Pages."
+      content="SHOPLINE Payments CA PrePRD by Payments PM 演示页面"
     />
     <style>
       :root {
-        --bg: #04111f;
-        --bg-soft: #0a1c33;
-        --card: rgba(8, 20, 37, 0.62);
-        --line: rgba(255, 255, 255, 0.14);
-        --text: #f4f7fb;
-        --muted: #98adc7;
-        --cyan: #6ef2ff;
-        --teal: #2de0c9;
-        --lime: #d8ff62;
-        --coral: #ff7d66;
-        --shadow: 0 30px 120px rgba(0, 0, 0, 0.45);
+        --bg: #07101f;
+        --bg-soft: #0f1830;
+        --card: rgba(10, 17, 33, 0.66);
+        --line: rgba(255, 255, 255, 0.12);
+        --text: #f5f8ff;
+        --muted: #9db0cd;
+        --cyan: #72f4ff;
+        --teal: #38d5d2;
+        --lime: #dbff72;
+        --gold: #ffc76a;
+        --rose: #ff7f92;
+        --shadow: 0 28px 80px rgba(0, 0, 0, 0.36);
       }
 
       * {
         box-sizing: border-box;
       }
 
-      html,
+      html {
+        scroll-behavior: smooth;
+      }
+
       body {
         margin: 0;
-        min-height: 100%;
-        background:
-          radial-gradient(circle at 20% 20%, rgba(110, 242, 255, 0.18), transparent 30%),
-          radial-gradient(circle at 80% 0%, rgba(216, 255, 98, 0.12), transparent 24%),
-          radial-gradient(circle at 70% 60%, rgba(255, 125, 102, 0.12), transparent 28%),
-          linear-gradient(180deg, #07111e 0%, #030913 55%, #01050a 100%);
+        min-height: 100vh;
         color: var(--text);
         font-family: "Space Grotesk", "Segoe UI", sans-serif;
+        background:
+          radial-gradient(circle at 15% 20%, rgba(114, 244, 255, 0.18), transparent 28%),
+          radial-gradient(circle at 85% 10%, rgba(219, 255, 114, 0.14), transparent 22%),
+          radial-gradient(circle at 50% 80%, rgba(255, 127, 146, 0.1), transparent 26%),
+          linear-gradient(180deg, #08101d 0%, #050915 52%, #04060c 100%);
         overflow-x: hidden;
       }
 
@@ -46,12 +50,12 @@
         position: fixed;
         inset: 0;
         background-image:
-          linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
-          linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+          linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
         background-size: 42px 42px;
-        mask-image: radial-gradient(circle at center, black 35%, transparent 80%);
+        mask-image: radial-gradient(circle at center, black 38%, transparent 78%);
         pointer-events: none;
-        opacity: 0.55;
+        opacity: 0.45;
       }
 
       canvas {
@@ -60,127 +64,124 @@
         width: 100%;
         height: 100%;
         pointer-events: none;
-        opacity: 0.9;
       }
 
-      .orb {
+      .glow {
         position: fixed;
         border-radius: 999px;
-        filter: blur(40px);
+        filter: blur(48px);
         mix-blend-mode: screen;
-        opacity: 0.6;
+        opacity: 0.44;
         pointer-events: none;
-        animation: drift 12s ease-in-out infinite;
+        animation: float 12s ease-in-out infinite;
       }
 
-      .orb-a {
-        width: 280px;
-        height: 280px;
-        background: rgba(110, 242, 255, 0.28);
-        top: 12%;
-        left: -5%;
+      .glow-a {
+        width: 320px;
+        height: 320px;
+        top: 8%;
+        left: -7%;
+        background: rgba(114, 244, 255, 0.26);
       }
 
-      .orb-b {
-        width: 240px;
-        height: 240px;
-        background: rgba(216, 255, 98, 0.2);
-        right: -4%;
-        top: 22%;
+      .glow-b {
+        width: 260px;
+        height: 260px;
+        top: 24%;
+        right: -6%;
+        background: rgba(219, 255, 114, 0.22);
         animation-delay: -4s;
       }
 
-      .orb-c {
-        width: 320px;
-        height: 320px;
-        background: rgba(255, 125, 102, 0.18);
+      .glow-c {
+        width: 300px;
+        height: 300px;
         bottom: -10%;
-        left: 25%;
+        left: 28%;
+        background: rgba(255, 199, 106, 0.16);
         animation-delay: -8s;
       }
 
-      @keyframes drift {
-        0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
-        50% { transform: translate3d(20px, -24px, 0) scale(1.08); }
+      @keyframes float {
+        0%, 100% {
+          transform: translate3d(0, 0, 0) scale(1);
+        }
+        50% {
+          transform: translate3d(28px, -22px, 0) scale(1.08);
+        }
       }
 
       .shell {
         position: relative;
-        width: min(1180px, calc(100% - 32px));
+        width: min(1180px, calc(100% - 28px));
         margin: 0 auto;
-        padding: 28px 0 56px;
+        padding: 24px 0 80px;
+      }
+
+      .nav,
+      .card,
+      .metric,
+      .timeline-item,
+      .qa-item,
+      .hero-side,
+      .statement {
+        background: var(--card);
+        border: 1px solid var(--line);
+        backdrop-filter: blur(20px);
+        box-shadow: var(--shadow);
       }
 
       .nav {
+        position: sticky;
+        top: 14px;
+        z-index: 10;
+        border-radius: 24px;
+        padding: 16px 18px;
         display: flex;
         align-items: center;
         justify-content: space-between;
-        gap: 20px;
-        padding: 16px 18px;
-        background: rgba(8, 17, 31, 0.44);
-        border: 1px solid var(--line);
-        border-radius: 22px;
-        backdrop-filter: blur(16px);
-        box-shadow: var(--shadow);
-        position: sticky;
-        top: 16px;
-        z-index: 10;
+        gap: 18px;
       }
 
       .brand {
         display: flex;
         align-items: center;
         gap: 12px;
-        font-weight: 700;
+        font-weight: 800;
         letter-spacing: 0.08em;
         text-transform: uppercase;
         font-size: 0.92rem;
       }
 
       .brand-mark {
-        width: 40px;
-        height: 40px;
+        width: 42px;
+        height: 42px;
         border-radius: 14px;
-        background: linear-gradient(135deg, var(--cyan), var(--lime));
-        color: #04111f;
         display: grid;
         place-items: center;
-        box-shadow: 0 0 40px rgba(110, 242, 255, 0.35);
+        background: linear-gradient(135deg, var(--cyan), var(--lime));
+        color: #07101f;
+        box-shadow: 0 0 40px rgba(114, 244, 255, 0.36);
       }
 
       .nav-links {
         display: flex;
-        gap: 16px;
+        gap: 14px;
+        flex-wrap: wrap;
         color: var(--muted);
-        font-size: 0.95rem;
+        font-size: 0.92rem;
       }
 
-      .nav-links span {
-        position: relative;
-      }
-
-      .nav-links span::after {
-        content: "";
-        position: absolute;
-        left: 0;
-        bottom: -6px;
-        width: 100%;
-        height: 2px;
-        background: linear-gradient(90deg, var(--cyan), var(--lime));
-        transform: scaleX(0);
-        transform-origin: left;
-        transition: transform 0.3s ease;
-      }
-
-      .nav-links span:hover::after {
-        transform: scaleX(1);
+      .nav-links a {
+        color: inherit;
+        text-decoration: none;
       }
 
       .hero {
+        padding: 68px 0 42px;
         display: grid;
-        grid-template-columns: 1.1fr 0.9fr;
-        gap: 28px;
-        padding: 72px 0 36px;
+        grid-template-columns: 1.08fr 0.92fr;
+        gap: 24px;
         align-items: center;
       }
 
@@ -188,13 +189,13 @@
         display: inline-flex;
         align-items: center;
         gap: 10px;
-        padding: 8px 14px;
+        padding: 9px 14px;
+        border-radius: 999px;
         background: rgba(255, 255, 255, 0.06);
         border: 1px solid rgba(255, 255, 255, 0.1);
-        border-radius: 999px;
         color: var(--lime);
         font-size: 0.82rem;
-        letter-spacing: 0.1em;
+        letter-spacing: 0.12em;
         text-transform: uppercase;
       }
 
@@ -204,54 +205,53 @@
         height: 10px;
         border-radius: 999px;
         background: var(--lime);
-        box-shadow: 0 0 20px var(--lime);
+        box-shadow: 0 0 18px var(--lime);
       }
 
       h1 {
         margin: 18px 0 16px;
-        font-size: clamp(3rem, 7vw, 6.3rem);
-        line-height: 0.92;
+        font-size: clamp(3rem, 7vw, 6rem);
+        line-height: 0.94;
         letter-spacing: -0.06em;
       }
 
-      .headline-accent {
+      .gradient-text {
         display: block;
         color: transparent;
-        background: linear-gradient(120deg, var(--cyan), #ffffff 45%, var(--lime));
+        background: linear-gradient(120deg, var(--cyan), #ffffff 42%, var(--gold));
         -webkit-background-clip: text;
         background-clip: text;
       }
 
       .lead {
-        max-width: 620px;
+        max-width: 640px;
         color: var(--muted);
-        font-size: 1.08rem;
-        line-height: 1.7;
+        line-height: 1.75;
+        font-size: 1.06rem;
       }
 
-      .actions {
+      .hero-actions {
         display: flex;
         gap: 14px;
-        margin-top: 26px;
         flex-wrap: wrap;
+        margin-top: 28px;
       }
 
       .button {
         appearance: none;
         border: 0;
+        border-radius: 999px;
+        padding: 14px 22px;
+        font-weight: 700;
         text-decoration: none;
         color: inherit;
-        padding: 14px 22px;
-        border-radius: 999px;
-        font-weight: 700;
-        letter-spacing: 0.01em;
-        transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+        transition: transform 0.24s ease, box-shadow 0.24s ease;
       }
 
       .button-primary {
+        color: #06101a;
         background: linear-gradient(135deg, var(--cyan), var(--teal));
-        color: #031018;
-        box-shadow: 0 18px 40px rgba(45, 224, 201, 0.25);
+        box-shadow: 0 16px 40px rgba(56, 213, 210, 0.28);
       }
 
       .button-secondary {
@@ -263,73 +263,55 @@
         transform: translateY(-3px);
       }
 
-      .stats {
+      .metric-grid {
+        margin-top: 32px;
         display: grid;
         grid-template-columns: repeat(3, minmax(0, 1fr));
         gap: 14px;
-        margin-top: 34px;
       }
 
-      .stat,
-      .panel,
-      .feature,
-      .quote,
-      .cta {
-        background: var(--card);
-        border: 1px solid var(--line);
-        backdrop-filter: blur(18px);
-        box-shadow: var(--shadow);
-      }
-
-      .stat {
-        border-radius: 20px;
+      .metric {
+        border-radius: 22px;
         padding: 18px;
       }
 
-      .stat-value {
-        font-size: 1.8rem;
-        font-weight: 700;
+      .metric strong {
+        display: block;
+        font-size: 1.9rem;
       }
 
-      .stat-label {
-        color: var(--muted);
+      .metric span {
+        display: block;
         margin-top: 8px;
-        font-size: 0.92rem;
+        color: var(--muted);
+        font-size: 0.94rem;
       }
 
-      .hero-stack {
-        display: grid;
-        gap: 16px;
-      }
-
-      .panel {
-        border-radius: 28px;
+      .hero-side {
+        border-radius: 30px;
         padding: 20px;
-        position: relative;
         overflow: hidden;
+        position: relative;
       }
 
-      .panel::before {
+      .hero-side::before {
         content: "";
         position: absolute;
-        inset: -40% auto auto -20%;
+        inset: -30% auto auto -10%;
         width: 220px;
         height: 220px;
-        background: radial-gradient(circle, rgba(110, 242, 255, 0.16), transparent 70%);
+        background: radial-gradient(circle, rgba(114, 244, 255, 0.18), transparent 70%);
       }
 
-      .panel-header {
+      .panel-top {
         display: flex;
         justify-content: space-between;
         align-items: center;
+        gap: 12px;
         margin-bottom: 18px;
       }
 
-      .panel-title {
-        font-weight: 700;
-      }
-
-      .pill {
+      .panel-tag {
         padding: 8px 12px;
         border-radius: 999px;
         background: rgba(255, 255, 255, 0.08);
@@ -337,206 +319,239 @@
         font-size: 0.82rem;
       }
 
-      .graph {
-        height: 220px;
+      .chart {
+        height: 240px;
         border-radius: 24px;
         position: relative;
+        overflow: hidden;
         background:
           linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.01)),
           linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
           linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px);
         background-size: auto, 48px 48px, 48px 48px;
-        overflow: hidden;
       }
 
-      .beam {
+      .chart-fill {
         position: absolute;
         inset: auto 0 0;
-        height: 70%;
-        background: linear-gradient(180deg, rgba(110, 242, 255, 0), rgba(110, 242, 255, 0.22));
-        clip-path: polygon(0 85%, 10% 74%, 20% 76%, 30% 56%, 40% 61%, 50% 38%, 60% 44%, 70% 28%, 80% 31%, 90% 10%, 100% 0, 100% 100%, 0 100%);
-        animation: pulse 5s ease-in-out infinite;
+        height: 72%;
+        background: linear-gradient(180deg, rgba(114, 244, 255, 0), rgba(114, 244, 255, 0.2));
+        clip-path: polygon(0 80%, 12% 76%, 24% 68%, 34% 46%, 45% 52%, 58% 34%, 70% 42%, 82% 18%, 100% 0, 100% 100%, 0 100%);
+        animation: pulse 5.5s ease-in-out infinite;
       }
 
-      .trace {
+      .chart svg {
         position: absolute;
         inset: 0;
+        width: 100%;
+        height: 100%;
       }
 
-      .trace path {
+      .chart path {
         fill: none;
-        stroke: url(#traceGradient);
+        stroke: url(#lineGradient);
         stroke-width: 4;
         stroke-linecap: round;
         stroke-linejoin: round;
-        stroke-dasharray: 12 10;
+        stroke-dasharray: 10 8;
         animation: dash 6s linear infinite;
       }
 
       @keyframes dash {
-        to { stroke-dashoffset: -200; }
+        to {
+          stroke-dashoffset: -180;
+        }
       }
 
       @keyframes pulse {
-        0%, 100% { transform: translateY(0); opacity: 0.85; }
-        50% { transform: translateY(-8px); opacity: 1; }
+        0%, 100% {
+          transform: translateY(0);
+          opacity: 0.86;
+        }
+        50% {
+          transform: translateY(-8px);
+          opacity: 1;
+        }
       }
 
-      .ticker {
+      .chip-grid {
+        margin-top: 14px;
         display: grid;
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: repeat(3, minmax(0, 1fr));
         gap: 12px;
       }
 
-      .ticket {
-        padding: 16px;
-        border-radius: 20px;
-        background: rgba(255, 255, 255, 0.04);
+      .chip {
+        padding: 14px;
+        border-radius: 18px;
+        background: rgba(255, 255, 255, 0.05);
         border: 1px solid rgba(255, 255, 255, 0.08);
       }
 
-      .ticket small {
+      .chip small {
         color: var(--muted);
       }
 
-      .ticket strong {
+      .chip strong {
         display: block;
         margin-top: 6px;
-        font-size: 1.18rem;
+        font-size: 1.04rem;
       }
 
-      .section {
-        padding: 30px 0;
-      }
-
-      .section-head {
-        display: flex;
-        justify-content: space-between;
-        align-items: end;
-        gap: 20px;
-        margin-bottom: 18px;
-      }
-
-      .section-head h2 {
-        margin: 0;
-        font-size: clamp(2rem, 4vw, 3.1rem);
-        letter-spacing: -0.05em;
-      }
-
-      .section-head p {
-        margin: 0;
-        color: var(--muted);
-        max-width: 480px;
-        line-height: 1.7;
-      }
-
-      .grid {
-        display: grid;
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-        gap: 16px;
-      }
-
-      .feature {
-        border-radius: 24px;
-        padding: 22px;
-        min-height: 240px;
-        position: relative;
-        transition: transform 0.25s ease, border-color 0.25s ease;
-      }
-
-      .feature:hover {
-        transform: translateY(-6px);
-        border-color: rgba(110, 242, 255, 0.4);
-      }
-
-      .feature-index {
-        font-size: 0.84rem;
-        letter-spacing: 0.12em;
-        text-transform: uppercase;
-        color: var(--lime);
-      }
-
-      .feature h3 {
-        margin: 18px 0 10px;
-        font-size: 1.35rem;
-      }
-
-      .feature p {
-        margin: 0;
-        color: var(--muted);
-        line-height: 1.7;
-      }
-
-      .feature-bar {
-        position: absolute;
-        left: 22px;
-        right: 22px;
-        bottom: 22px;
-        height: 4px;
-        border-radius: 999px;
-        background: rgba(255, 255, 255, 0.08);
-        overflow: hidden;
-      }
-
-      .feature-bar span {
-        display: block;
-        width: var(--bar);
-        height: 100%;
-        border-radius: inherit;
-        background: linear-gradient(90deg, var(--cyan), var(--lime));
-      }
-
-      .quote {
+      .statement {
+        margin: 20px 0 38px;
         border-radius: 28px;
-        padding: 26px;
-        margin-top: 18px;
+        padding: 24px;
       }
 
-      .quote p {
+      .statement p {
         margin: 0;
-        font-size: clamp(1.4rem, 2vw, 2rem);
-        line-height: 1.45;
+        font-size: clamp(1.35rem, 2vw, 1.95rem);
+        line-height: 1.5;
         letter-spacing: -0.03em;
       }
 
-      .quote footer {
-        margin-top: 18px;
-        color: var(--muted);
+      .section {
+        padding: 28px 0;
       }
 
-      .cta {
-        border-radius: 32px;
-        padding: 26px;
+      .section-heading {
         display: flex;
         justify-content: space-between;
-        align-items: center;
-        gap: 18px;
-        margin: 36px 0 18px;
+        gap: 16px;
+        align-items: end;
+        margin-bottom: 18px;
       }
 
-      .cta h3 {
+      .section-heading h2 {
+        margin: 0;
+        font-size: clamp(2rem, 4vw, 3rem);
+        letter-spacing: -0.05em;
+      }
+
+      .section-heading p {
+        margin: 0;
+        max-width: 500px;
+        color: var(--muted);
+        line-height: 1.75;
+      }
+
+      .outline-grid,
+      .card-grid,
+      .confirm-grid,
+      .qa-grid {
+        display: grid;
+        gap: 16px;
+      }
+
+      .outline-grid {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+      }
+
+      .card-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .confirm-grid,
+      .qa-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .card {
+        border-radius: 26px;
+        padding: 22px;
+        position: relative;
+        transition: transform 0.24s ease, border-color 0.24s ease;
+      }
+
+      .card:hover {
+        transform: translateY(-6px);
+        border-color: rgba(114, 244, 255, 0.36);
+      }
+
+      .card h3,
+      .card h4 {
         margin: 0 0 10px;
-        font-size: clamp(1.8rem, 3vw, 2.7rem);
-        letter-spacing: -0.04em;
       }
 
-      .cta p {
+      .card p,
+      .card li {
+        color: var(--muted);
+        line-height: 1.72;
+      }
+
+      .card ul {
+        margin: 0;
+        padding-left: 18px;
+      }
+
+      .card-index {
+        color: var(--lime);
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        font-size: 0.82rem;
+        margin-bottom: 14px;
+      }
+
+      .timeline {
+        position: relative;
+        display: grid;
+        gap: 16px;
+      }
+
+      .timeline::before {
+        content: "";
+        position: absolute;
+        left: 16px;
+        top: 8px;
+        bottom: 8px;
+        width: 2px;
+        background: linear-gradient(180deg, var(--cyan), rgba(255, 255, 255, 0.06));
+      }
+
+      .timeline-item {
+        position: relative;
+        margin-left: 40px;
+        border-radius: 22px;
+        padding: 18px 18px 18px 20px;
+      }
+
+      .timeline-item::before {
+        content: "";
+        position: absolute;
+        left: -33px;
+        top: 22px;
+        width: 14px;
+        height: 14px;
+        border-radius: 999px;
+        background: var(--cyan);
+        box-shadow: 0 0 20px var(--cyan);
+      }
+
+      .timeline-item strong {
+        display: block;
+        margin-bottom: 8px;
+        font-size: 1.06rem;
+      }
+
+      .qa-item {
+        border-radius: 22px;
+        padding: 20px;
+      }
+
+      .qa-item h4 {
+        margin: 0 0 10px;
+      }
+
+      .qa-item p {
         margin: 0;
         color: var(--muted);
-      }
-
-      .footer {
-        display: flex;
-        justify-content: space-between;
-        gap: 14px;
-        padding: 14px 4px 0;
-        color: var(--muted);
-        font-size: 0.92rem;
+        line-height: 1.72;
       }
 
       .reveal {
         opacity: 0;
-        transform: translateY(24px);
+        transform: translateY(22px);
         transition: opacity 0.8s ease, transform 0.8s ease;
       }
 
@@ -545,235 +560,424 @@
         transform: translateY(0);
       }
 
+      .tilt {
+        transform-style: preserve-3d;
+      }
+
+      .footer {
+        padding-top: 18px;
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        color: var(--muted);
+        font-size: 0.92rem;
+      }
+
       @media (max-width: 980px) {
         .hero,
-        .grid,
-        .cta {
-          grid-template-columns: 1fr;
-          display: grid;
-        }
-
-        .stats,
-        .ticker {
+        .card-grid,
+        .outline-grid,
+        .confirm-grid,
+        .qa-grid {
           grid-template-columns: 1fr;
         }
 
-        .section-head,
+        .metric-grid,
+        .chip-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .section-heading,
         .footer,
         .nav {
           flex-direction: column;
           align-items: flex-start;
         }
-
-        .nav-links {
-          flex-wrap: wrap;
-        }
       }
 
       @media (max-width: 720px) {
         .shell {
-          width: min(100% - 20px, 1180px);
+          width: min(100% - 18px, 1180px);
           padding-top: 14px;
         }
 
         h1 {
-          font-size: clamp(2.6rem, 15vw, 4.6rem);
+          font-size: clamp(2.6rem, 15vw, 4.8rem);
         }
 
-        .panel,
-        .feature,
-        .quote,
-        .cta,
-        .stat {
+        .nav,
+        .card,
+        .metric,
+        .timeline-item,
+        .qa-item,
+        .hero-side,
+        .statement {
           border-radius: 22px;
         }
       }
     </style>
   </head>
   <body>
-    <canvas id="stars"></canvas>
-    <div class="orb orb-a"></div>
-    <div class="orb orb-b"></div>
-    <div class="orb orb-c"></div>
+    <canvas id="particles"></canvas>
+    <div class="glow glow-a"></div>
+    <div class="glow glow-b"></div>
+    <div class="glow glow-c"></div>
 
     <div class="shell">
       <nav class="nav reveal">
         <div class="brand">
-          <div class="brand-mark">C</div>
-          Codex Pulse
+          <div class="brand-mark">S</div>
+          SLPCA Demo
         </div>
         <div class="nav-links">
-          <span>Realtime Design</span>
-          <span>Interactive Motion</span>
-          <span>Launch Demo</span>
+          <a href="#outline">大纲</a>
+          <a href="#background">项目背景</a>
+          <a href="#features">产品功能</a>
+          <a href="#timeline">时间线</a>
+          <a href="#qa">Q&A</a>
         </div>
       </nav>
 
       <section class="hero">
         <div class="reveal">
-          <div class="eyebrow">Live Frontend Showcase</div>
+          <div class="eyebrow">SHOPLINE Payments CA PrePRD</div>
           <h1>
-            Launch a page that feels
-            <span class="headline-accent">alive before you click.</span>
+            Payments PM 的
+            <span class="gradient-text">PrePRD 演示舞台</span>
           </h1>
           <p class="lead">
-            Built as a high-energy GitHub Pages demo: animated backdrop, glassmorphism data panels,
-            kinetic charts, cinematic gradients, and a polished mobile-friendly layout that reads like
-            a product keynote instead of a template.
+            这是一份面向演示场景设计的动态前端页面，用来承载
+            <strong>SHOPLINE Payments CA PrePRD by Payments PM</strong>
+            的结构化内容。它更像一次产品发布会，而不是一份静态文档：更容易讲故事，更适合对齐背景、目标、能力与时间线。
           </p>
-          <div class="actions">
-            <a class="button button-primary" href="#experience">Enter Experience</a>
-            <a class="button button-secondary" href="https://github.com/alan7414/codex">View Repository</a>
+          <div class="hero-actions">
+            <a class="button button-primary" href="#outline">开始演示</a>
+            <a class="button button-secondary" href="#confirmations">查看待确认点</a>
           </div>
-          <div class="stats">
-            <div class="stat reveal">
-              <div class="stat-value" data-count="128">0</div>
-              <div class="stat-label">Animated signals per cycle</div>
+          <div class="metric-grid">
+            <div class="metric reveal">
+              <strong data-count="6">0</strong>
+              <span>核心功能模块</span>
             </div>
-            <div class="stat reveal">
-              <div class="stat-value" data-count="94">0</div>
-              <div class="stat-label">Perceived wow-factor score</div>
+            <div class="metric reveal">
+              <strong data-count="4">0</strong>
+              <span>关键里程碑阶段</span>
             </div>
-            <div class="stat reveal">
-              <div class="stat-value" data-count="7">0</div>
-              <div class="stat-label">Distinct motion layers</div>
+            <div class="metric reveal">
+              <strong data-count="12">0</strong>
+              <span>推荐演示分钟数</span>
             </div>
           </div>
         </div>
 
-        <div class="hero-stack reveal">
-          <div class="panel tilt-card">
-            <div class="panel-header">
-              <div class="panel-title">Neon Activity Grid</div>
-              <div class="pill">Streaming visual state</div>
+        <aside class="hero-side reveal tilt">
+          <div class="panel-top">
+            <strong>Launch Readiness</strong>
+            <span class="panel-tag">Demo-ready structure</span>
+          </div>
+          <div class="chart">
+            <div class="chart-fill"></div>
+            <svg viewBox="0 0 600 260" preserveAspectRatio="none">
+              <defs>
+                <linearGradient id="lineGradient" x1="0" x2="1" y1="0" y2="0">
+                  <stop offset="0%" stop-color="#72f4ff"></stop>
+                  <stop offset="50%" stop-color="#dbff72"></stop>
+                  <stop offset="100%" stop-color="#ffc76a"></stop>
+                </linearGradient>
+              </defs>
+              <path d="M 0 208 C 40 204, 90 182, 126 168 S 206 148, 246 122 S 326 134, 372 96 S 458 62, 512 48 S 570 24, 600 16"></path>
+            </svg>
+          </div>
+          <div class="chip-grid">
+            <div class="chip reveal tilt">
+              <small>Focus</small>
+              <strong>CA Market</strong>
             </div>
-            <div class="graph">
-              <div class="beam"></div>
-              <svg class="trace" viewBox="0 0 600 260" preserveAspectRatio="none">
-                <defs>
-                  <linearGradient id="traceGradient" x1="0" x2="1" y1="0" y2="0">
-                    <stop offset="0%" stop-color="#6ef2ff"></stop>
-                    <stop offset="55%" stop-color="#d8ff62"></stop>
-                    <stop offset="100%" stop-color="#ff7d66"></stop>
-                  </linearGradient>
-                </defs>
-                <path d="M 0 214 C 48 210, 76 140, 112 144 S 180 198, 232 136 S 284 118, 332 156 S 420 210, 462 106 S 544 64, 600 28"></path>
-              </svg>
+            <div class="chip reveal tilt">
+              <small>Mode</small>
+              <strong>PrePRD Storytelling</strong>
+            </div>
+            <div class="chip reveal tilt">
+              <small>Output</small>
+              <strong>GitHub Pages Demo</strong>
             </div>
           </div>
+        </aside>
+      </section>
 
-          <div class="ticker">
-            <div class="ticket reveal tilt-card">
-              <small>Render speed</small>
-              <strong>16 ms</strong>
-            </div>
-            <div class="ticket reveal tilt-card">
-              <small>Immersion depth</small>
-              <strong>Ultra</strong>
-            </div>
-            <div class="ticket reveal tilt-card">
-              <small>Deploy target</small>
-              <strong>/codex</strong>
-            </div>
+      <section class="statement reveal">
+        <p>
+          把一份产品前置方案，变成能让业务、产品、运营、风控和清算团队快速进入同一画面的演示体验。
+        </p>
+      </section>
+
+      <section class="section" id="outline">
+        <div class="section-heading reveal">
+          <h2>#大纲</h2>
+          <p>
+            以下内容按照你提供的结构组织，适合直接在评审会、kickoff、或跨团队同步中使用。
+          </p>
+        </div>
+        <div class="outline-grid">
+          <article class="card reveal tilt">
+            <div class="card-index">01</div>
+            <h3>项目背景</h3>
+            <p>说明为什么要做加拿大市场的 SHOPLINE Payments 能力布局，以及它与业务增长的关系。</p>
+          </article>
+          <article class="card reveal tilt">
+            <div class="card-index">02</div>
+            <h3>项目目标</h3>
+            <p>界定商户覆盖、支付成功率、上线节奏、清算闭环与运营可控性等核心目标。</p>
+          </article>
+          <article class="card reveal tilt">
+            <div class="card-index">03</div>
+            <h3>产品功能</h3>
+            <p>围绕 Onboarding、产品能力、商户体验、资金清算、运营后台五个维度展开。</p>
+          </article>
+          <article class="card reveal tilt">
+            <div class="card-index">04</div>
+            <h3>时间线与风险</h3>
+            <p>同步阶段性里程碑、依赖项、待确认点以及 Q&A，帮助团队快速识别阻塞。</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" id="background">
+        <div class="section-heading reveal">
+          <h2>#项目背景</h2>
+          <p>
+            加拿大市场对本地收单、结算合规、支付方式适配与商户体验都有更明确的要求，PrePRD 需要先为这几个方向建立统一认知。
+          </p>
+        </div>
+        <div class="card-grid">
+          <article class="card reveal tilt">
+            <h3>市场机会</h3>
+            <p>
+              现有跨境商户对于北美市场的支付转化率、资金回笼效率与本地化支付信任感有持续需求。CA 市场切入有助于提升本地支付覆盖与平台商业化深度。
+            </p>
+          </article>
+          <article class="card reveal tilt">
+            <h3>业务驱动</h3>
+            <p>
+              从平台视角看，Payments 自建能力不仅影响 GMV 和 take rate，也决定商户是否愿意在更高阶段继续留在 SHOPLINE 体系中。
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" id="goals">
+        <div class="section-heading reveal">
+          <h2>#项目目标</h2>
+          <p>
+            目标不是单点功能上线，而是为商户交付一个可开通、可收款、可对账、可运营的闭环。
+          </p>
+        </div>
+        <div class="card-grid">
+          <article class="card reveal tilt">
+            <h3>业务目标</h3>
+            <ul>
+              <li>支持 CA 商户通过标准化流程完成入驻与支付能力开通。</li>
+              <li>提升本地支付转化，缩短首单完成路径。</li>
+              <li>为后续扩展支付方式和市场复制保留可复用框架。</li>
+            </ul>
+          </article>
+          <article class="card reveal tilt">
+            <h3>产品目标</h3>
+            <ul>
+              <li>实现商户从申请、审核、配置、收款到清算的关键链路可视化。</li>
+              <li>确保后台具备基本运营、风控、客服与异常处理能力。</li>
+              <li>把关键依赖与开放问题在 PrePRD 阶段提前暴露。</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" id="features">
+        <div class="section-heading reveal">
+          <h2>#产品功能</h2>
+          <p>
+            以下五个模块是本次 PrePRD 演示的主体。每个模块都强调能力范围、用户价值、以及后续需要确认的边界。
+          </p>
+        </div>
+        <div class="card-grid">
+          <article class="card reveal tilt">
+            <div class="card-index">##Onboarding</div>
+            <h3>商户准入与开通流程</h3>
+            <ul>
+              <li>支持商户提交基础企业信息、受益人信息、结算账户信息与合规材料。</li>
+              <li>定义申请状态流转，例如草稿、提交、审核中、补件、通过、拒绝。</li>
+              <li>为不同角色提供状态提示与下一步动作引导。</li>
+            </ul>
+          </article>
+          <article class="card reveal tilt">
+            <div class="card-index">##产品能力</div>
+            <h3>支付核心能力</h3>
+            <ul>
+              <li>支持卡支付等基础收款能力，并预留本地支付方式扩展空间。</li>
+              <li>覆盖授权、扣款、退款、拒付、失败重试与交易查询等能力描述。</li>
+              <li>定义多币种、风控策略、失败原因透出等基础能力边界。</li>
+            </ul>
+          </article>
+          <article class="card reveal tilt">
+            <div class="card-index">##商户体验</div>
+            <h3>前台操作与配置体验</h3>
+            <ul>
+              <li>商户能清楚知道如何开通、配置、测试与正式启用支付。</li>
+              <li>控制台需要展示关键状态、交易概览、异常提醒和帮助入口。</li>
+              <li>尽量降低首次启用门槛，让非支付专家商户也能顺利完成上线。</li>
+            </ul>
+          </article>
+          <article class="card reveal tilt">
+            <div class="card-index">##资金清算</div>
+            <h3>结算、对账与资金可见性</h3>
+            <ul>
+              <li>定义结算周期、结算状态、失败原因与补偿处理路径。</li>
+              <li>支持商户查看交易明细、结算批次、费用拆分和异常项。</li>
+              <li>明确财务口径，减少交易金额、手续费和到账金额理解偏差。</li>
+            </ul>
+          </article>
+          <article class="card reveal tilt">
+            <div class="card-index">##运营管理后台</div>
+            <h3>内部运营与问题处理</h3>
+            <ul>
+              <li>提供商户检索、审核处理、状态变更、异常记录与操作日志。</li>
+              <li>支持客服和运营定位支付问题、结算问题与审核阻塞。</li>
+              <li>为风控、清算和商户成功团队提供协作支点。</li>
+            </ul>
+          </article>
+          <article class="card reveal tilt">
+            <div class="card-index">Cross-team Fit</div>
+            <h3>跨团队协同视图</h3>
+            <p>
+              演示时可把该模块用作补充说明：哪些能力由 Payments 主导，哪些依赖合规、财务、风控、研发平台或第三方 PSP。
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" id="timeline">
+        <div class="section-heading reveal">
+          <h2>#项目时间线</h2>
+          <p>
+            时间线示例以阶段为主，方便你后续替换成真实日期与 owner。当前内容更适合做高层同步的占位版本。
+          </p>
+        </div>
+        <div class="timeline">
+          <div class="timeline-item reveal">
+            <strong>Phase 1 · Discovery & Alignment</strong>
+            梳理 CA 市场准入要求、第三方能力边界、业务目标和最小可交付范围。
+          </div>
+          <div class="timeline-item reveal">
+            <strong>Phase 2 · PrePRD Review</strong>
+            与 Payments、风控、财务、法务、运营和研发确认需求范围与依赖项。
+          </div>
+          <div class="timeline-item reveal">
+            <strong>Phase 3 · PRD / Solution Design</strong>
+            输出更细化的流程、状态机、接口方案、后台能力与异常处理路径。
+          </div>
+          <div class="timeline-item reveal">
+            <strong>Phase 4 · Build / Pilot / Launch</strong>
+            进入开发、联调、试点商户验证和正式发布阶段，并根据 pilot 反馈迭代。
           </div>
         </div>
       </section>
 
-      <section class="section" id="experience">
-        <div class="section-head reveal">
-          <h2>Three design systems colliding beautifully.</h2>
+      <section class="section" id="confirmations">
+        <div class="section-heading reveal">
+          <h2>#待确认点</h2>
           <p>
-            The page blends control-room density, premium SaaS polish, and atmospheric motion graphics
-            into one coherent demo surface.
+            这里建议保留为评审会重点，因为它直接决定产品边界是否会在后续出现返工。
           </p>
         </div>
-        <div class="grid">
-          <article class="feature reveal tilt-card" style="--bar: 88%;">
-            <div class="feature-index">01 / Atmosphere</div>
-            <h3>Responsive cinematic background</h3>
-            <p>
-              Layered radial light fields, a masked grid, and a procedurally animated star canvas create depth without sacrificing readability.
-            </p>
-            <div class="feature-bar"><span></span></div>
+        <div class="confirm-grid">
+          <article class="card reveal tilt">
+            <h3>合规与准入范围</h3>
+            <p>首期支持的商户类型、禁入类目、必要材料清单，以及 KYC/KYB 深度要求是否已经明确。</p>
           </article>
-          <article class="feature reveal tilt-card" style="--bar: 92%;">
-            <div class="feature-index">02 / Motion</div>
-            <h3>Microinteractions that feel intentional</h3>
-            <p>
-              Scroll reveal, counter animation, hover tilt, pulsing trace lines, and floating orbs make every section feel actively composed.
-            </p>
-            <div class="feature-bar"><span></span></div>
+          <article class="card reveal tilt">
+            <h3>支付与清算方案</h3>
+            <p>首期支付方式、结算币种、结算频率、费用模型、退款/拒付处理路径是否与财务和 PSP 对齐。</p>
           </article>
-          <article class="feature reveal tilt-card" style="--bar: 81%;">
-            <div class="feature-index">03 / Delivery</div>
-            <h3>Zero-build static deploy</h3>
-            <p>
-              Everything ships in a single HTML file, which makes it ideal for GitHub Pages demos where speed and reliability matter.
-            </p>
-            <div class="feature-bar"><span></span></div>
+          <article class="card reveal tilt">
+            <h3>后台运营职责</h3>
+            <p>审核、异常处理、商户沟通、权限分工和 SLA 由谁负责，需要哪些系统支持。</p>
           </article>
-        </div>
-        <div class="quote reveal">
-          <p>
-            “This doesn’t look like a placeholder demo. It looks like the opening scene of a product launch.”
-          </p>
-          <footer>Designed for `alan7414.github.io/codex` showcase mode.</footer>
         </div>
       </section>
 
-      <section class="cta reveal">
-        <div>
-          <h3>Demo ready. Pages friendly. Built to impress in seconds.</h3>
+      <section class="section" id="qa">
+        <div class="section-heading reveal">
+          <h2>#Q&A</h2>
           <p>
-            The repository now has a striking landing page foundation you can evolve into a product site, portfolio, or visual concept pitch.
+            这部分可以作为会议尾声的预设问题池，帮助你在演示时主动回答高频疑问。
           </p>
         </div>
-        <a class="button button-primary" href="https://github.com/alan7414/codex">Open Source</a>
+        <div class="qa-grid">
+          <div class="qa-item reveal">
+            <h4>为什么是 PrePRD，而不是直接进入详细 PRD？</h4>
+            <p>因为当前更需要对齐范围、依赖与优先级，先把错误方向排除，再进入高成本设计与开发。</p>
+          </div>
+          <div class="qa-item reveal">
+            <h4>首期上线是否追求全量能力？</h4>
+            <p>建议以最小闭环为优先，先解决可开通、可收款、可结算、可运营，再逐步扩展支付方式与后台深度。</p>
+          </div>
+          <div class="qa-item reveal">
+            <h4>演示页面里的内容如何替换成正式版本？</h4>
+            <p>当前文案都是可直接替换的占位描述。你后续只需要把真实背景、目标、日期、owner 和流程图补进去即可。</p>
+          </div>
+        </div>
       </section>
 
       <footer class="footer reveal">
-        <span>Codex Pulse Demo</span>
-        <span>Static HTML • Motion UI • GitHub Pages</span>
+        <span>SLPCA · SHOPLINE Payments CA PrePRD by Payments PM</span>
+        <span>Static demo page for presentation and GitHub Pages</span>
       </footer>
     </div>
 
     <script>
-      const revealObserver = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("visible");
-          }
-        });
-      }, { threshold: 0.18 });
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("visible");
+            }
+          });
+        },
+        { threshold: 0.15 }
+      );
 
-      document.querySelectorAll(".reveal").forEach((node) => revealObserver.observe(node));
+      document.querySelectorAll(".reveal").forEach((node) => observer.observe(node));
 
-      const countUp = (node) => {
+      document.querySelectorAll("[data-count]").forEach((node) => {
         const target = Number(node.dataset.count || 0);
-        const duration = 1400;
         const start = performance.now();
+        const duration = 1400;
 
-        const frame = (now) => {
+        const render = (now) => {
           const progress = Math.min((now - start) / duration, 1);
           const eased = 1 - Math.pow(1 - progress, 3);
           node.textContent = Math.round(target * eased);
-          if (progress < 1) requestAnimationFrame(frame);
+          if (progress < 1) {
+            requestAnimationFrame(render);
+          }
         };
 
-        requestAnimationFrame(frame);
-      };
+        requestAnimationFrame(render);
+      });
 
-      document.querySelectorAll("[data-count]").forEach(countUp);
-
-      const tiltCards = document.querySelectorAll(".tilt-card");
-      tiltCards.forEach((card) => {
+      document.querySelectorAll(".tilt").forEach((card) => {
         card.addEventListener("mousemove", (event) => {
           const rect = card.getBoundingClientRect();
           const px = (event.clientX - rect.left) / rect.width;
           const py = (event.clientY - rect.top) / rect.height;
-          const rx = (0.5 - py) * 10;
-          const ry = (px - 0.5) * 12;
-          card.style.transform = `perspective(1000px) rotateX(${rx}deg) rotateY(${ry}deg) translateY(-4px)`;
+          const rotateX = (0.5 - py) * 8;
+          const rotateY = (px - 0.5) * 10;
+          card.style.transform =
+            "perspective(1000px) rotateX(" +
+            rotateX +
+            "deg) rotateY(" +
+            rotateY +
+            "deg) translateY(-4px)";
         });
 
         card.addEventListener("mouseleave", () => {
@@ -781,43 +985,44 @@
         });
       });
 
-      const canvas = document.getElementById("stars");
+      const canvas = document.getElementById("particles");
       const context = canvas.getContext("2d");
-      let stars = [];
+      let points = [];
 
-      const resize = () => {
+      function resizeCanvas() {
         canvas.width = window.innerWidth * devicePixelRatio;
         canvas.height = window.innerHeight * devicePixelRatio;
         context.setTransform(devicePixelRatio, 0, 0, devicePixelRatio, 0, 0);
-        const count = Math.min(160, Math.floor(window.innerWidth / 10));
-        stars = Array.from({ length: count }, () => ({
+        const count = Math.min(150, Math.floor(window.innerWidth / 10));
+        points = Array.from({ length: count }, () => ({
           x: Math.random() * window.innerWidth,
           y: Math.random() * window.innerHeight,
-          r: Math.random() * 1.8 + 0.2,
-          s: Math.random() * 0.35 + 0.08,
-          a: Math.random() * 0.7 + 0.2,
+          r: Math.random() * 1.9 + 0.2,
+          s: Math.random() * 0.36 + 0.08,
+          a: Math.random() * 0.7 + 0.18
         }));
-      };
+      }
 
-      const render = () => {
+      function drawParticles() {
         context.clearRect(0, 0, window.innerWidth, window.innerHeight);
-        stars.forEach((star) => {
-          star.y -= star.s;
-          if (star.y < -4) {
-            star.y = window.innerHeight + 4;
-            star.x = Math.random() * window.innerWidth;
+        points.forEach((point) => {
+          point.y -= point.s;
+          if (point.y < -4) {
+            point.y = window.innerHeight + 4;
+            point.x = Math.random() * window.innerWidth;
           }
+
           context.beginPath();
-          context.fillStyle = `rgba(255,255,255,${star.a})`;
-          context.arc(star.x, star.y, star.r, 0, Math.PI * 2);
+          context.fillStyle = "rgba(255,255,255," + point.a + ")";
+          context.arc(point.x, point.y, point.r, 0, Math.PI * 2);
           context.fill();
         });
-        requestAnimationFrame(render);
-      };
+        requestAnimationFrame(drawParticles);
+      }
 
-      window.addEventListener("resize", resize);
-      resize();
-      render();
+      window.addEventListener("resize", resizeCanvas);
+      resizeCanvas();
+      drawParticles();
     </script>
   </body>
 </html>
